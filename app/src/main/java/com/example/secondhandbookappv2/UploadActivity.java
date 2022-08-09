@@ -8,26 +8,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.JsonWriter;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends MyActivity {
 
     private static final String TAG = UploadActivity.class.getSimpleName();
     private ImageProcessor imageProcessor;
@@ -38,12 +33,14 @@ public class UploadActivity extends AppCompatActivity {
             JSONObject object = generateJSONObject(intent);
             writeJSon(object);
             Intent toResultPage = new Intent(UploadActivity.this, ResultActivity.class);
+            toResultPage.putExtra("fromWhere", "upload");
             toResultPage.putExtra("time", imageProcessor.getTime());
             startActivity(toResultPage);
         }
     };
 
     private void writeJSon(JSONObject object) {
+        Log.d(TAG, "writeJSon: ");
         File file = new File(this.getFilesDir() + "/history/" + imageProcessor.getTime() + "/record.json");
         FileOutputStream fOut = null;
         try {
@@ -87,7 +84,7 @@ public class UploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-        
+        ActivityCollector.finishOneActivity(DataActivity.class.getName());
         findView();
     }
 
@@ -96,8 +93,6 @@ public class UploadActivity extends AppCompatActivity {
         super.onStart();
         String time = getCurrentTime();
         imageProcessor = new ImageProcessor(this, time);
-        SharedPreferences preferences = getSharedPreferences("currentData", Context.MODE_PRIVATE);
-        preferences.edit().putString("time", time).commit();
         Intent intent = new Intent(this, TCPIntentService.class);
         intent.putExtra("time", imageProcessor.getTime());
         intent.putExtra("resizeImagePath", imageProcessor.getResizeImagePath());
@@ -105,6 +100,12 @@ public class UploadActivity extends AppCompatActivity {
 
         IntentFilter filter = new IntentFilter(TCPIntentService.ACTION_TCP_DONE);
         registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver);
     }
 
     private void findView() {

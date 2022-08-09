@@ -2,7 +2,6 @@ package com.example.secondhandbookappv2;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -24,7 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataActivity extends AppCompatActivity {
+public class DataActivity extends MyActivity {
 
     private static final int REQUESTCODE = 2;
     private static final String TAG = DataActivity.class.getSimpleName();
@@ -47,28 +46,15 @@ public class DataActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
         getPermission();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
         mediator.detach();
         viewPager.unregisterOnPageChangeCallback(changeCallback);
+        Log.d(TAG, "onDestroy: ");
     }
 
     private void findView() {
@@ -97,7 +83,6 @@ public class DataActivity extends AppCompatActivity {
                 return fragments.get(position);
             }
         });
-        //viewPager 页面切换监听
         viewPager.registerOnPageChangeCallback(changeCallback);
 
         mediator = new TabLayoutMediator(tabLayout, viewPager, false, true, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -109,7 +94,6 @@ public class DataActivity extends AppCompatActivity {
                 tab.setCustomView(tv_tab);
             }
         });
-        //要执行这一句才是真正将两者绑定起来
         mediator.attach();
     }
 
@@ -131,7 +115,7 @@ public class DataActivity extends AppCompatActivity {
         if (ANSPermission == PackageManager.PERMISSION_DENIED)
             permissionList.add(Manifest.permission.ACCESS_NETWORK_STATE);
         if (!permissionList.isEmpty()){
-            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), REQUESTCODE);
+            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[0]), REQUESTCODE);
         }
     }
 
@@ -139,8 +123,8 @@ public class DataActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUESTCODE){
-            for (int i = 0; i < grantResults.length; i++){
-                if (grantResults[i] == PackageManager.PERMISSION_DENIED){
+            for (int grantResult : grantResults) {
+                if (grantResult == PackageManager.PERMISSION_DENIED) {
                     new AlertDialog.Builder(this)
                             .setTitle("提醒")
                             .setMessage("因有權限不允許，可能會導致程式無法執行，故需重新詢問權限")
@@ -156,8 +140,6 @@ public class DataActivity extends AppCompatActivity {
     }
 
     private ViewPager2.OnPageChangeCallback changeCallback = new ViewPager2.OnPageChangeCallback() {
-        private int activeSize = 16;
-        private int normalSize = 12;
 
         @Override
         public void onPageSelected(int position) {
@@ -167,9 +149,11 @@ public class DataActivity extends AppCompatActivity {
                 TabLayout.Tab tab = tabLayout.getTabAt(i);
                 TextView tabView = (TextView) tab.getCustomView();
                 if (tab.getPosition() == position) {
+                    int activeSize = 16;
                     tabView.setTextSize(activeSize);
                     tabView.setTypeface(Typeface.DEFAULT_BOLD);
                 } else {
+                    int normalSize = 12;
                     tabView.setTextSize(normalSize);
                     tabView.setTypeface(Typeface.DEFAULT);
                 }

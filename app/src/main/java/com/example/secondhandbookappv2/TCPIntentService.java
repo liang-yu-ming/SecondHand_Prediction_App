@@ -142,7 +142,6 @@ public class TCPIntentService extends IntentService {
             System.arraycopy(data, 0, alldatalength_byte, 0,alldatalength_byte.length);
             data = cliparray(data, 4);
             int alldatalength_int = ByteBuffer.wrap(alldatalength_byte).getInt();
-            Log.d(TAG, "getServerData: alldatalength_int = " + alldatalength_int);
 
             // yellowSpotAverage
             while (data.length < 8){
@@ -155,7 +154,6 @@ public class TCPIntentService extends IntentService {
             System.arraycopy(data, 0, yellowSpotAverage_byte, 0,yellowSpotAverage_byte.length);
             data = cliparray(data, 8);
             yellowSpotAverage = ByteBuffer.wrap(yellowSpotAverage_byte).getDouble();
-            Log.d(TAG, "getServerData: yellowSpotAverage = " + yellowSpotAverage);
             alldatalength_int -= 8;
 
             // yellowSpotSD
@@ -169,7 +167,6 @@ public class TCPIntentService extends IntentService {
             System.arraycopy(data, 0, yellowSpotSD_byte, 0,yellowSpotSD_byte.length);
             data = cliparray(data, 8);
             yellowSpotSD = ByteBuffer.wrap(yellowSpotSD_byte).getDouble();
-            Log.d(TAG, "getServerData: yellowSpotSD = " + yellowSpotSD);
             alldatalength_int -= 8;
 
             // letterAverage
@@ -183,7 +180,6 @@ public class TCPIntentService extends IntentService {
             System.arraycopy(data, 0, letterAverage_byte, 0,letterAverage_byte.length);
             data = cliparray(data, 8);
             letterAverage = ByteBuffer.wrap(letterAverage_byte).getDouble();
-            Log.d(TAG, "getServerData: letterAverage = " + letterAverage);
             alldatalength_int -= 8;
 
             // letterSD
@@ -197,7 +193,6 @@ public class TCPIntentService extends IntentService {
             System.arraycopy(data, 0, letterSD_byte, 0,letterSD_byte.length);
             data = cliparray(data, 8);
             letterSD = ByteBuffer.wrap(letterSD_byte).getDouble();
-            Log.d(TAG, "getServerData: letterSD = " + letterSD);
             alldatalength_int -= 8;
 
             while (alldatalength_int > 0){
@@ -211,7 +206,6 @@ public class TCPIntentService extends IntentService {
                 System.arraycopy(data, 0, oneimagelength_byte, 0,oneimagelength_byte.length);
                 data = cliparray(data, 4);
                 int oneimagelength_int = ByteBuffer.wrap(oneimagelength_byte).getInt();
-                Log.d(TAG, "getServerData: oneimagelength_int = " + oneimagelength_int);
                 alldatalength_int -= 4;
                 while (data.length < oneimagelength_int){
                     int current_rec = socket.getInputStream().read(frame);
@@ -227,11 +221,6 @@ public class TCPIntentService extends IntentService {
                 detectedImagePath[imageCount] = byteToFile(time, oneimage, imageCount);
                 imageCount++;
             }
-            Log.d(TAG, "getServerData: done");
-            /*
-            for (int i = 0; i < 6; i++)
-                preferences.edit().putString("detectedImagePath_" + i, detectedImagePath[i]).commit();
-             */
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -320,9 +309,16 @@ public class TCPIntentService extends IntentService {
         String[] bookTimeSplit = bookDate.split("-"); // 取得書本的時間
         int bookTimeInt = Integer.valueOf(bookTimeSplit[0]) * 365 + Integer.valueOf(bookTimeSplit[1]) * 30 + Integer.valueOf(bookTimeSplit[2]);
         double age =  (currentTimeInt - bookTimeInt) / 365.0; // 取得年齡
-        // bookCategory, age, CTR, yellowSpotAverage, yellowSpotSD, letterAverage, letterSD
-        // 計算出折價
-        discount = (float)Math.round(discount*100.0)/100.0;
+        double item1 = (double)CTR / ((double)CTR + 1000.0);
+        double item2 = Math.pow(2.71, -Math.pow((yellowSpotAverage + letterAverage * 1.5) * (1 + yellowSpotSD + letterSD * 1.5) * 35, 2.0));
+        if(bookCategory.equals("文學小說") || bookCategory.equals("人文史地")){
+            double item3 = 30.0 / (Math.log(age + 1.0) + 30.0);
+            discount = item1 * item2 * item3;
+        } else {
+            double item3 = ((4.0 / 5.0) * (1.0 / (Math.pow(1.8, age - 8) + 1.0))) + (1.0 / 5.0 * 50.0 / (age + 50.0));
+            discount = item1 * item2 * item3;
+        }
+        discount = (float)Math.round(discount * 100.0)/100.0;
     }
 
 }

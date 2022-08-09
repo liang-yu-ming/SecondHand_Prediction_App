@@ -49,6 +49,12 @@ public class DataFragment_1 extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // setContentView(R.layout.fragment_data_1);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -59,6 +65,15 @@ public class DataFragment_1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        et_bookName.setText("");
+        et_bookDate.setText("");
+        et_bookPrice.setText("");
+        et_bookPage.setText("");
     }
 
     @Override
@@ -80,6 +95,12 @@ public class DataFragment_1 extends Fragment {
                 .putString("bookPrice", et_bookPrice.getText().toString())
                 .putString("choosePage", tv_choosePage.getText().toString())
                 .commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
     }
 
     private void findView() {

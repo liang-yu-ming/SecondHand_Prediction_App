@@ -21,7 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends MyActivity {
 
     private static final String TAG = ResultActivity.class.getSimpleName();
     private TabLayout tabLayout;
@@ -47,8 +47,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void initFragment() {
-        SharedPreferences preferences = getSharedPreferences("currentData", Context.MODE_PRIVATE);
-        String time = preferences.getString("time", "");
+        String time = getIntent().getStringExtra("time");
         fragments = new ArrayList<>();
         Bundle bundle = new Bundle();
         bundle.putString("time", time);

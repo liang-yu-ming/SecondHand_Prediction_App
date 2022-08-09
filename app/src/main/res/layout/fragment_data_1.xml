@@ -45,7 +45,8 @@
                 android:layout_marginLeft="16dp"
                 android:ems="10"
                 android:hint="e.g. harry potter"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:text="" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,7 +179,7 @@
                 android:layout_weight="1"
                 android:ems="5"
                 android:hint="e,g, 200"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

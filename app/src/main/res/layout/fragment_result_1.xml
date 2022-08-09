@@ -91,6 +91,24 @@
             app:layout_constraintTop_toTopOf="@+id/tv_searchDegreeTitle" />
 
         <TextView
+            android:id="@+id/tv_resultBookPriceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="原始價格："
+            app:layout_constraintStart_toStartOf="@+id/tv_searchDegreeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_searchDegreeTitle" />
+
+        <TextView
+            android:id="@+id/tv_resultBookPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="200"
+            app:layout_constraintStart_toEndOf="@+id/tv_resultBookPriceTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_resultBookPriceTitle" />
+
+        <TextView
             android:id="@+id/tv_analyzeTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +116,7 @@
             android:text="書況分析"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintStart_toStartOf="@+id/tv_resultBookDateTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tv_searchDegreeTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_resultBookPriceTitle" />
 
         <TextView
             android:id="@+id/tv_yellowSpotAverageTitle"

@@ -1,8 +1,6 @@
 package com.example.secondhandbookappv2;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,11 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ResultFragment_1 extends Fragment {
 
@@ -34,12 +30,15 @@ public class ResultFragment_1 extends Fragment {
     private TextView bookCategory;
     private TextView bookDate;
     private TextView searchDegree;
+    private TextView originBookPriceTitle;
+    private TextView originBookPrice;
     private TextView yellowSpotAverage;
     private TextView yellowSpotSD;
     private TextView letterAverage;
     private TextView letterSD;
     private TextView discount;
     private TextView bookPrice;
+    private TextView bookPriceTitle;
     private Button btn_toHome;
     private String time;
 
@@ -65,9 +64,7 @@ public class ResultFragment_1 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findView();
-        // setViewValue();
         String jsonString = readJSONFile();
-        Log.d(TAG, "onViewCreated: " + jsonString);
         getValue(jsonString);
     }
 
@@ -78,25 +75,22 @@ public class ResultFragment_1 extends Fragment {
             bookCategory.setText(object.getString("bookCategory"));
             bookDate.setText(object.getString("bookDate"));
             searchDegree.setText(object.getString("searchDegree"));
-            double round = object.getDouble("yellowSpotAverage");
-            round = Math.round(round * 100.0) / 100.0;
-            yellowSpotAverage.setText((round * 100) + " %");
-            round = object.getDouble("yellowSpotSD");
-            round = Math.round(round * 100.0) / 100.0;
-            yellowSpotSD.setText((round * 100) + " %");
-            round = object.getDouble("letterAverage");
-            round = Math.round(round * 100.0) / 100.0;
-            letterAverage.setText((round * 100) + " %");
-            round = object.getDouble("letterSD");
-            round = Math.round(round * 100.0) / 100.0;
-            letterSD.setText((round * 100) + " %");
-            discount.setText(object.getString("discount"));
+            yellowSpotAverage.setText(String.format("%.2f", object.getDouble("yellowSpotAverage") * 100) + " %");
+            yellowSpotSD.setText(String.format("%.2f", object.getDouble("yellowSpotSD")));
+            letterAverage.setText(String.format("%.2f", object.getDouble("letterAverage") * 100) + " %");
+            letterSD.setText(String.format("%.2f", object.getDouble("letterSD")));
+            discount.setText(String.format("%.1f", object.getDouble("discount") * 100) + " %");
             String priceString = object.getString("bookPrice");
-            if (priceString.equals(""))
+            if (priceString.equals("")) {
+                bookPriceTitle.setVisibility(View.GONE);
                 bookPrice.setVisibility(View.GONE);
+                originBookPriceTitle.setVisibility(View.GONE);
+                originBookPrice.setVisibility(View.GONE);
+            }
             else {
-                int priceInt = Integer.parseInt(priceString) * Integer.parseInt(object.getString("discount"));
-                bookPrice.setText(String.valueOf(priceInt));
+                originBookPrice.setText("NT " + priceString);
+                double priceInt = Integer.parseInt(priceString) * object.getDouble("discount");
+                bookPrice.setText("NT " + (int)priceInt);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -109,20 +103,14 @@ public class ResultFragment_1 extends Fragment {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = br.readLine();
             StringBuilder sb = new StringBuilder();
-
             while (line != null) {
                 sb.append(line).append("\n");
                 line = br.readLine();
             }
-
             fileAsString = sb.toString();
-            System.out.println(fileAsString);
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
-        Log.d(TAG, "readJSONFile: " + fileAsString);
         return fileAsString;
     }
 
@@ -131,6 +119,8 @@ public class ResultFragment_1 extends Fragment {
         bookCategory = getView().findViewById(R.id.tv_resultBookCategory);
         bookDate = getView().findViewById(R.id.tv_resultBookDate);
         searchDegree = getView().findViewById(R.id.tv_searchDegree);
+        originBookPriceTitle = getView().findViewById(R.id.tv_resultBookPriceTitle);
+        originBookPrice = getView().findViewById(R.id.tv_resultBookPrice);
         yellowSpotAverage = getView().findViewById(R.id.tv_yellowSpotAverage);
         yellowSpotSD = getView().findViewById(R.id.tv_yellowSpotSD);
         letterAverage = getView().findViewById(R.id.tv_letterAverage);
@@ -146,6 +136,6 @@ public class ResultFragment_1 extends Fragment {
             }
         });
         bookPrice = getView().findViewById(R.id.tv_bookPrice2);
-
+        bookPriceTitle = getView().findViewById(R.id.tv_bookPriceTitle);
     }
 }

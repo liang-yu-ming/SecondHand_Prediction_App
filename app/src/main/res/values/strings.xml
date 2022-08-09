@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SecondHandBookApp</string>
+    <string name="app_name">書籍評鑑大師</string>
     <string-array name="book_category">
         <item>文學小說</item>
         <item>商業理財</item>

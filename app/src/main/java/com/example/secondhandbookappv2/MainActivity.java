@@ -27,16 +27,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MyActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
-    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCollector.finishOneActivity(ResultActivity.class.getName());
         findView();
     }
 
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         File dir = new File(MainActivity.this.getFilesDir() + "/history");
         File[] files = dir.listFiles();
         if (files != null){
+            Log.d(TAG, "findView: jihihi");
             recyclerView = findViewById(R.id.recycleView);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setHasFixedSize(true);
@@ -80,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                    intent.putExtra("fromWhere", "main");
+                    intent.putExtra("time", file.getName());
+                    startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -97,13 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 historyTime = itemView.findViewById(R.id.item_historyTime);
                 historyBookName = itemView.findViewById(R.id.item_historyBookName);
                 layout = itemView.findViewById(R.id.layout);
-                layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                        startActivity(intent);
-                    }
-                });
             }
         }
     }
@@ -121,13 +124,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             fileAsString = sb.toString();
-            System.out.println(fileAsString);
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
-        Log.d(TAG, "readJSONFile: " + fileAsString);
         return fileAsString;
     }
 }

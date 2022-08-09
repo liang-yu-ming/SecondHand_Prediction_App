@@ -70,6 +70,16 @@ public class DataFragment_2 extends Fragment {
         findView();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+        imageViewsState = new boolean[]{false, false, false, false, false, false};
+        singleChange = false;
+        currentView = -1;
+        imageViewCount = 0;
+    }
+
     private void findView() {
         int[] imageIDs = new int[]{ R.id.Data2_image1,
                 R.id.Data2_image2,
@@ -177,6 +187,7 @@ public class DataFragment_2 extends Fragment {
                 Bitmap image = null;
                 try {
                     image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
+                    image = getResizedBitmap(image);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
