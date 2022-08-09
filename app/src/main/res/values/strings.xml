@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SecondHandBookApp</string>
+    <string-array name="book_category">
+        <item>文學小說</item>
+        <item>商業理財</item>
+        <item>社會科學</item>
+        <item>心理勵志</item>
+        <item>人文史地</item>
+        <item>其他</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

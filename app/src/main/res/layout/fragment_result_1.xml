@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResultFragment_1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_resultBookName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="書名"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_resultBookDataTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="書籍基本資訊"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/tv_resultBookName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resultBookName" />
+
+        <TextView
+            android:id="@+id/tv_resultBookCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="書籍類別："
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@+id/tv_resultBookDataTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resultBookDataTitle" />
+
+        <TextView
+            android:id="@+id/tv_resultBookCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="商業理財"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toEndOf="@+id/tv_resultBookCategoryTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_resultBookCategoryTitle" />
+
+        <TextView
+            android:id="@+id/tv_resultBookDateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="出版時間："
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@+id/tv_resultBookCategoryTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resultBookCategoryTitle" />
+
+        <TextView
+            android:id="@+id/tv_resultBookDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="2022-8-8"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toEndOf="@+id/tv_resultBookDateTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_resultBookDateTitle" />
+
+        <TextView
+            android:id="@+id/tv_searchDegreeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="暢銷程度："
+            app:layout_constraintStart_toStartOf="@+id/tv_resultBookDateTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resultBookDateTitle" />
+
+        <TextView
+            android:id="@+id/tv_searchDegree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="100039"
+            app:layout_constraintStart_toEndOf="@+id/tv_searchDegreeTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_searchDegreeTitle" />
+
+        <TextView
+            android:id="@+id/tv_analyzeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="書況分析"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/tv_resultBookDateTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_searchDegreeTitle" />
+
+        <TextView
+            android:id="@+id/tv_yellowSpotAverageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="黃斑平均佔比："
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@+id/tv_analyzeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_analyzeTitle" />
+
+        <TextView
+            android:id="@+id/tv_yellowSpotAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="10%"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toEndOf="@+id/tv_yellowSpotAverageTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_yellowSpotAverageTitle" />
+
+        <TextView
+            android:id="@+id/tv_yellowSpotSDTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="黃斑佔比標準差："
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toStartOf="@+id/tv_yellowSpotAverageTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_yellowSpotAverageTitle" />
+
+        <TextView
+            android:id="@+id/tv_yellowSpotSD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="10.1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintStart_toEndOf="@+id/tv_yellowSpotSDTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_yellowSpotSDTitle" />
+
+        <TextView
+            android:id="@+id/tv_letterAverageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="字跡平均佔比："
+            app:layout_constraintStart_toStartOf="@+id/tv_yellowSpotSDTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_yellowSpotSDTitle" />
+
+        <TextView
+            android:id="@+id/tv_letterAverage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="10%"
+            app:layout_constraintStart_toEndOf="@+id/tv_letterAverageTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_letterAverageTitle" />
+
+        <TextView
+            android:id="@+id/tv_letterSDTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="字跡佔比標準差："
+            app:layout_constraintStart_toStartOf="@+id/tv_letterAverageTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_letterAverageTitle" />
+
+        <TextView
+            android:id="@+id/tv_letterSD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="10.1"
+            app:layout_constraintStart_toEndOf="@+id/tv_letterSDTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_letterSDTitle" />
+
+        <TextView
+            android:id="@+id/tv_scoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="折舊比例："
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/tv_letterSDTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_letterSDTitle" />
+
+        <TextView
+            android:id="@+id/tv_discount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="30"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/tv_scoreTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_scoreTitle" />
+
+        <TextView
+            android:id="@+id/tv_bookPriceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="預估售價："
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/tv_scoreTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scoreTitle" />
+
+        <TextView
+            android:id="@+id/tv_bookPrice2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="300"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/tv_bookPriceTitle"
+            app:layout_constraintTop_toTopOf="@+id/tv_bookPriceTitle" />
+
+        <Button
+            android:id="@+id/btn_toHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="回首頁"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
