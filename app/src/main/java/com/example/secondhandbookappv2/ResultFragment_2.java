@@ -97,6 +97,13 @@ public class ResultFragment_2 extends Fragment {
                     try {
                         Bitmap bitmap = BitmapFactory.decodeFile(object.getString("detectedImagePath_" + i));
                         image[i].setImageBitmap(bitmap);
+                        image[i].setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                bigImageView.setVisibility(View.VISIBLE);
+                                bigImageView.setImageBitmap(bitmap);
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -111,6 +118,13 @@ public class ResultFragment_2 extends Fragment {
                     try {
                         Bitmap bitmap = BitmapFactory.decodeFile(object.getString("resizeImagePath_" + i));
                         image[i].setImageBitmap(bitmap);
+                        image[i].setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                bigImageView.setVisibility(View.VISIBLE);
+                                bigImageView.setImageBitmap(bitmap);
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
